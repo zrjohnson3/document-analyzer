@@ -41,6 +41,24 @@ export interface GenerateResponse {
 }
 
 /**
+ * Upload result item structure from the backend
+ */
+interface UploadResultItem {
+  filename: string;
+  path: string;
+  status: "success" | "failed";
+  error?: string;
+}
+
+/**
+ * Response from multiple file upload
+ */
+interface MultipleUploadResponse {
+  message: string;
+  results: UploadResultItem[];
+}
+
+/**
  * Create fetch options with timeout
  */
 const createFetchOptions = (options: RequestInit = {}): RequestInit => {
@@ -298,5 +316,35 @@ export async function deleteGeneratedFile(
     return { data };
   } catch (error) {
     return { error: error instanceof Error ? error.message : "Failed to delete generated file" };
+  }
+}
+
+/**
+ * Upload multiple documents for analysis
+ */
+export async function uploadDocuments(
+  formData: FormData
+): Promise<ApiResponse<string[]>> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/upload/multiple`, createFetchOptions({
+      method: "POST",
+      body: formData,
+      // Don't set Content-Type here as it will be set automatically with boundary
+    }));
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      return { error: errorData.detail || "Upload failed" };
+    }
+
+    const data = await response.json() as MultipleUploadResponse;
+    // Extract file paths from the results array
+    const filePaths = data.results
+      .filter((result) => result.status === "success")
+      .map((result) => result.path);
+      
+    return { data: filePaths };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Upload failed" };
   }
 } 
