@@ -39,4 +39,48 @@
   .page-subtitle {
     color: #9ca3af;
   }
+}
+
+.processing-status {
+  background-color: #ebf5ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 20px;
+  text-align: center;
+  color: #1e40af;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.7; }
+  50% { opacity: 1; }
+  100% { opacity: 0.7; }
+}
+
+.processing-error {
+  background-color: #fee2e2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 20px;
+  color: #b91c1c;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.processing-error button {
+  background-color: #b91c1c;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.processing-error button:hover {
+  background-color: #991b1b;
 } 

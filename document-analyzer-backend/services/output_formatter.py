@@ -7,9 +7,9 @@ import time
 from datetime import datetime
 from dotenv import load_dotenv
 
-# For PDF conversion
-from weasyprint import HTML, CSS
-from weasyprint.text.fonts import FontConfiguration
+# For PDF conversion - temporarily disabled
+# from weasyprint import HTML, CSS
+# from weasyprint.text.fonts import FontConfiguration
 import tempfile
 
 # Load environment variables
@@ -139,43 +139,19 @@ def create_docx(extracted_text, filename, document_type="emergency_plan"):
 
 def create_pdf_from_docx(docx_path):
     """
-    Convert a DOCX file to PDF using WeasyPrint
+    Convert a DOCX file to PDF
     
     Args:
         docx_path: Path to the DOCX file
         
     Returns:
-        Path to the generated PDF file
+        Path to the generated PDF file (or None if PDF generation is disabled)
     """
-    # This is a simplified implementation
-    # For production, a more robust approach would be to use a dedicated conversion service
-    # or to use docx2pdf library (which requires MS Word on Windows or LibreOffice on Linux)
-    
-    # Create a temporary HTML file from the document content
+    # PDF generation is temporarily disabled due to WeasyPrint dependencies
     pdf_path = docx_path.replace('.docx', '.pdf')
     
-    # We'll create a simple HTML representation of the document
-    # This is a very simplified approach - a production solution would use
-    # a proper DOCX to HTML converter
-    doc = Document(docx_path)
-    html_content = "<html><head><style>body{font-family:Calibri;}</style></head><body>"
-    
-    for para in doc.paragraphs:
-        if para.style.name.startswith('Heading'):
-            level = para.style.name.replace('Heading', '')
-            html_content += f"<h{level}>{para.text}</h{level}>"
-        else:
-            html_content += f"<p>{para.text}</p>"
-    
-    html_content += "</body></html>"
-    
-    # Use WeasyPrint to convert HTML to PDF
-    font_config = FontConfiguration()
-    html = HTML(string=html_content)
-    css = CSS(string="@page { size: A4; margin: 1cm }")
-    html.write_pdf(pdf_path, font_config=font_config, stylesheets=[css])
-    
-    return pdf_path
+    print("WARNING: PDF generation is temporarily disabled. Only DOCX output will be available.")
+    return None
 
 def generate_output_files(extracted_text, filename, formats=None):
     """
@@ -199,8 +175,9 @@ def generate_output_files(extracted_text, filename, formats=None):
         output_files["docx"] = docx_path
     
     if "pdf" in formats and "docx" in output_files:
-        # Generate PDF from the DOCX
-        pdf_path = create_pdf_from_docx(output_files["docx"])
-        output_files["pdf"] = pdf_path
+        # PDF generation is disabled, but we'll add the warning
+        pdf_result = create_pdf_from_docx(output_files["docx"])
+        if pdf_result:
+            output_files["pdf"] = pdf_result
     
     return output_files

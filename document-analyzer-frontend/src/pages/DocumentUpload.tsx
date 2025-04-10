@@ -3,6 +3,7 @@ import { FileUpload } from "../components/FileUpload/FileUpload";
 import { DocumentList } from "../components/DocumentList/DocumentList";
 import { ProgressTracker } from "../components/ProgressTracker/ProgressTracker";
 import { FileWithPreview } from "../types";
+import { uploadDocuments, generateDocument } from "../services/api";
 import "./DocumentUpload.css";
 
 /**
@@ -11,13 +12,13 @@ import "./DocumentUpload.css";
 type StepStatus = "pending" | "active" | "completed";
 
 /**
- * Step data structure for document processing workflow
+ * Step configuration for the progress tracker
  */
-type Step = {
+interface Step {
   id: number;
   label: string;
   status: StepStatus;
-};
+}
 
 /**
  * DocumentUpload Page Component
@@ -36,6 +37,10 @@ export const DocumentUpload = () => {
 
   // Current step in the workflow (0-based index)
   const [currentStep, setCurrentStep] = useState(0);
+
+  // State for tracking processing status
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [processError, setProcessError] = useState<string | null>(null);
 
   // Workflow steps configuration
   const [steps, setSteps] = useState<Step[]>([
@@ -103,6 +108,70 @@ export const DocumentUpload = () => {
     });
   };
 
+  /**
+   * Process the uploaded documents
+   * Sends the documents to the backend for analysis
+   */
+  const handleProcessDocuments = async () => {
+    if (documents.length === 0) return;
+
+    setIsProcessing(true);
+    setProcessError(null);
+
+    try {
+      // Create a FormData object to send files
+      const formData = new FormData();
+      documents.forEach((doc) => {
+        // The key must be "files" (matching the parameter name in the backend)
+        formData.append("files", doc.file);
+      });
+
+      // 1. Upload the documents
+      const uploadResult = await uploadDocuments(formData);
+
+      if (uploadResult.error || !uploadResult.data) {
+        throw new Error(uploadResult.error || "Failed to upload documents");
+      }
+
+      // 2. Generate the document from uploaded file paths
+      const generateResult = await generateDocument(
+        uploadResult.data,
+        "general", // Document type
+        "analyzed_document", // Output filename
+        ["docx", "pdf"] // Output formats
+      );
+
+      if (generateResult.error) {
+        throw new Error(generateResult.error);
+      }
+
+      // Update the workflow steps
+      setCurrentStep(2);
+      setSteps((prevSteps) =>
+        prevSteps.map((step) =>
+          step.id === 2
+            ? { ...step, status: "completed" as StepStatus }
+            : step.id === 3
+            ? { ...step, status: "active" as StepStatus }
+            : step
+        )
+      );
+
+      // Here you would handle the results from the backend
+      // For example, storing them in state to display in the next step
+      console.log("Generation result:", generateResult.data);
+    } catch (error) {
+      console.error("Error processing documents:", error);
+      setProcessError(
+        error instanceof Error
+          ? error.message
+          : "An error occurred while processing the documents"
+      );
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
   return (
     <div className="document-upload-page">
       {/* Page header */}
@@ -127,7 +196,26 @@ export const DocumentUpload = () => {
       {/* Document list section */}
       <div className="documents-section">
         <h2 className="section-title">Uploaded Documents</h2>
-        <DocumentList documents={documents} onRemove={handleRemoveDocument} />
+        <DocumentList
+          documents={documents}
+          onRemove={handleRemoveDocument}
+          onProcess={handleProcessDocuments}
+        />
+
+        {/* Processing status message */}
+        {isProcessing && (
+          <div className="processing-status">
+            <p>Processing your documents... This may take a minute.</p>
+          </div>
+        )}
+
+        {/* Error message if processing fails */}
+        {processError && (
+          <div className="processing-error">
+            <p>Error: {processError}</p>
+            <button onClick={() => setProcessError(null)}>Dismiss</button>
+          </div>
+        )}
       </div>
     </div>
   );
