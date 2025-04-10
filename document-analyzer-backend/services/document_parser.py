@@ -3,8 +3,13 @@ import pdfplumber
 from docx import Document
 import aiofiles
 from pathlib import Path
+from dotenv import load_dotenv
 
-UPLOAD_DIR = "storage/uploads"
+# Load environment variables
+load_dotenv()
+
+# Get configuration from environment variables
+UPLOAD_DIR = os.getenv("UPLOAD_DIR", "storage/uploads")
 
 async def save_upload_file(file):
     """Save an uploaded file to the uploads directory and return the path"""

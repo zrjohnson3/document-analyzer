@@ -5,13 +5,18 @@ import os
 from pathlib import Path
 import time
 from datetime import datetime
+from dotenv import load_dotenv
 
 # For PDF conversion
 from weasyprint import HTML, CSS
 from weasyprint.text.fonts import FontConfiguration
 import tempfile
 
-OUTPUT_DIR = "storage/outputs"
+# Load environment variables
+load_dotenv()
+
+# Get configuration from environment variables
+OUTPUT_DIR = os.getenv("OUTPUT_DIR", "storage/outputs")
 
 def create_docx(extracted_text, filename, document_type="emergency_plan"):
     """

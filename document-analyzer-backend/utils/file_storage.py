@@ -1,10 +1,14 @@
 import os
 import shutil
 from pathlib import Path
+from dotenv import load_dotenv
 
-# Define storage directories
-UPLOAD_DIR = "storage/uploads"
-OUTPUT_DIR = "storage/outputs"
+# Load environment variables
+load_dotenv()
+
+# Define storage directories from environment variables
+UPLOAD_DIR = os.getenv("UPLOAD_DIR", "storage/uploads")
+OUTPUT_DIR = os.getenv("OUTPUT_DIR", "storage/outputs")
 
 def ensure_storage_dirs():
     """Ensure all storage directories exist"""
