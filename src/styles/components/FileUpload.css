@@ -1,0 +1,27 @@
+.upload-zone {
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  margin: 2rem 0;
+}
+
+.upload-zone.dragging {
+  border-color: #2196f3;
+  background-color: rgba(33, 150, 243, 0.1);
+}
+
+.file-input {
+  display: none;
+}
+
+.upload-content {
+  cursor: pointer;
+}
+
+.file-types, .file-size {
+  color: #666;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+} 
