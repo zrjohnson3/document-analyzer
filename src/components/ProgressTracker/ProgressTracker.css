@@ -1,0 +1,83 @@
+.progress-tracker {
+  margin: 2rem 0;
+  padding: 1rem;
+}
+
+.progress-bar {
+  position: relative;
+  height: 4px;
+  background-color: var(--gray-200);
+  border-radius: 2px;
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.progress-indicator {
+  position: absolute;
+  height: 100%;
+  background-color: var(--primary);
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+.steps-container {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex: 1;
+}
+
+.step-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: var(--gray-600);
+  margin-bottom: 0.5rem;
+  border: 2px solid var(--gray-200);
+  transition: all 0.3s ease;
+  z-index: 5;
+}
+
+.step-label {
+  font-size: 0.875rem;
+  color: var(--gray-600);
+  text-align: center;
+  transition: color 0.3s ease;
+  max-width: 120px;
+}
+
+/* Active step */
+.step-item.active .step-number {
+  background-color: var(--primary);
+  color: white;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.2);
+}
+
+.step-item.active .step-label {
+  color: var(--primary);
+  font-weight: 500;
+}
+
+/* Completed step */
+.step-item.completed .step-number {
+  background-color: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.step-item.completed .step-label {
+  color: var(--gray-900);
+} 
