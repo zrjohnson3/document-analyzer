@@ -1,0 +1,42 @@
+.document-upload-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.page-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #111827;
+  text-align: center;
+}
+
+.page-subtitle {
+  font-size: 1.125rem;
+  color: #6b7280;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.upload-section {
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #111827;
+}
+
+/* Light/dark mode considerations */
+@media (prefers-color-scheme: dark) {
+  .page-title, .section-title {
+    color: #f3f4f6;
+  }
+  
+  .page-subtitle {
+    color: #9ca3af;
+  }
+} 
