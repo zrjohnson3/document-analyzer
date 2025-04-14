@@ -74,7 +74,7 @@ button:hover {
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
   .app-container {
-    background-color: #111827;
+    background-color: #1e293b;
     color: #f9fafb;
   }
 }

@@ -13,6 +13,8 @@
   -moz-osx-font-smoothing: grayscale;
   --primary: #4f46e5;
   --primary-dark: #4338ca;
+  --accent: #06b6d4;
+  --accent-dark: #0891b2;
   --gray-50: #f9fafb;
   --gray-100: #f3f4f6;
   --gray-200: #e5e7eb;
@@ -99,7 +101,7 @@ button:focus-visible {
 @media (prefers-color-scheme: dark) {
   :root {
     color: #f3f4f6;
-    background-color: #111827;
+    background-color: #1e293b;
   }
   
   h1, h2, h3, h4, h5, h6 {

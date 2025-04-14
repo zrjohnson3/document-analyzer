@@ -1,5 +1,5 @@
 .upload-zone {
-  border: 2px dashed #4f46e5;
+  border: 2px dashed var(--primary);
   border-radius: 12px;
   padding: 3rem 2rem;
   text-align: center;
@@ -16,8 +16,8 @@
 }
 
 .upload-zone.dragging {
-  border-color: #4f46e5;
-  background-color: rgba(79, 70, 229, 0.1);
+  border-color: var(--accent);
+  background-color: rgba(6, 182, 212, 0.1);
   transform: scale(1.01);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
@@ -53,6 +53,26 @@
 
 .upload-icon {
   margin-bottom: 1rem;
-  color: #4f46e5;
+  color: var(--primary);
   font-size: 2.5rem;
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+  .upload-zone {
+    border-color: var(--accent);
+    background-color: rgba(6, 182, 212, 0.05);
+  }
+  
+  .upload-zone.dragging {
+    background-color: rgba(6, 182, 212, 0.15);
+  }
+  
+  .file-types, .file-size {
+    color: #d1d5db;
+  }
+  
+  .upload-icon {
+    color: var(--accent);
+  }
 } 

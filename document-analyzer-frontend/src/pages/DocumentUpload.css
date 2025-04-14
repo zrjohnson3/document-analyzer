@@ -14,13 +14,28 @@
 
 .page-subtitle {
   font-size: 1.125rem;
-  color: #6b7280;
+  color: #4b5563;
   margin-bottom: 2rem;
   text-align: center;
 }
 
 .upload-section {
   margin-bottom: 3rem;
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 2px solid #e5e7eb;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.documents-section {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 2px solid #e5e7eb;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease;
 }
 
 .section-title {
@@ -28,6 +43,18 @@
   font-weight: 600;
   margin-bottom: 1rem;
   color: #111827;
+  display: flex;
+  align-items: center;
+}
+
+.section-title::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 1.5rem;
+  background-color: var(--accent);
+  margin-right: 0.75rem;
+  border-radius: 2px;
 }
 
 /* Light/dark mode considerations */
@@ -37,7 +64,17 @@
   }
   
   .page-subtitle {
-    color: #9ca3af;
+    color: #d1d5db;
+  }
+  
+  .upload-section, .documents-section {
+    background-color: #293548;
+    border-color: #374151;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15), 0 1px 3px rgba(0,0,0,0.2);
+  }
+  
+  .upload-section:hover, .documents-section:hover {
+    box-shadow: 0 6px 10px rgba(0,0,0,0.25), 0 1px 3px rgba(0,0,0,0.3);
   }
 }
 
@@ -83,4 +120,8 @@
 
 .processing-error button:hover {
   background-color: #991b1b;
+}
+
+.upload-section:hover, .documents-section:hover {
+  box-shadow: 0 6px 10px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.12);
 } 

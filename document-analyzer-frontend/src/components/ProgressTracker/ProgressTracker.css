@@ -1,23 +1,26 @@
 .progress-tracker {
-  margin: 2rem 0;
+  margin: 2rem 0 3rem;
   padding: 1rem;
+  position: relative;
 }
 
 .progress-bar {
   position: relative;
-  height: 4px;
+  height: 6px;
   background-color: var(--gray-200);
-  border-radius: 2px;
+  border-radius: 3px;
   margin-bottom: 1.5rem;
   margin-top: 1.5rem;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .progress-indicator {
   position: absolute;
   height: 100%;
-  background-color: var(--primary);
-  border-radius: 2px;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+  border-radius: 3px;
   transition: width 0.5s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .steps-container {
@@ -35,8 +38,8 @@
 }
 
 .step-number {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background-color: var(--gray-200);
   display: flex;
@@ -48,6 +51,7 @@
   border: 2px solid var(--gray-200);
   transition: all 0.3s ease;
   z-index: 5;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .step-label {
@@ -62,22 +66,46 @@
 .step-item.active .step-number {
   background-color: var(--primary);
   color: white;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.2);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .step-item.active .step-label {
   color: var(--primary);
-  font-weight: 500;
+  font-weight: 600;
 }
 
 /* Completed step */
 .step-item.completed .step-number {
-  background-color: var(--primary);
+  background-color: var(--accent);
   color: white;
-  border-color: var(--primary);
+  border-color: var(--accent);
 }
 
 .step-item.completed .step-label {
-  color: var(--gray-900);
+  color: var(--accent-dark);
+  font-weight: 500;
+}
+
+/* Dark mode overrides */
+@media (prefers-color-scheme: dark) {
+  .progress-bar {
+    background-color: var(--gray-700);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+  
+  .step-number {
+    background-color: var(--gray-700);
+    border-color: var(--gray-700);
+    color: var(--gray-300);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  .step-label {
+    color: var(--gray-300);
+  }
+  
+  .step-item.completed .step-label {
+    color: var(--accent);
+  }
 } 
